@@ -1,0 +1,13 @@
+^MANIFEST\.SKIP$
+^MANIFEST\.bak$
+^\.
+.*\.ERR$
+.*\.old$
+.*\.bak$
+\.tar\.gz$
+^Makefile$
+^MYMETA\.
+^blib
+^pm_to_blib
+^gh-pages
+^cover_db

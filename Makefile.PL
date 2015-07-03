@@ -23,7 +23,7 @@ WriteMakefile(
         'Moose'                       => '2.1403',
         'MooseX::AttributeShortcuts', => '0.028',
         'namespace::autoclean'        => '0.24',
-        'Sweet::File'                 => '0.06',
+        'Sweet::Home'                 => '0.06',
     },
     # EXE_FILES => ['bin/foo', 'bin/bar'],
     BUILD_REQUIRES => {

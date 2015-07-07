@@ -3,6 +3,9 @@ use latest;
 use Moose;
 
 use MooseX::AttributeShortcuts;
+use Sweet::Oracle::Sqlldr::BadFile;
+use Sweet::Oracle::Sqlldr::DiscardFile;
+use Sweet::Oracle::Sqlldr::LogFile;
 
 use namespace::autoclean;
 

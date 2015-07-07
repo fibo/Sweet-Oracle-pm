@@ -3,6 +3,7 @@ use latest;
 use Moose;
 
 use MooseX::AttributeShortcuts;
+use Sweet::Oracle::Environment;
 use Sweet::Oracle::Sqlldr::BadFile;
 use Sweet::Oracle::Sqlldr::DiscardFile;
 use Sweet::Oracle::Sqlldr::LogFile;
@@ -54,6 +55,13 @@ sub _build_command {
 
     return $command;
 }
+
+has serviceid => (
+is => 'lazy',
+isa=>'Str',
+);
+
+sub _build_serviceid { shift->env->ORACLE_SID }
 
 has control_file => (
     is  => 'lazy',
@@ -129,11 +137,10 @@ sub _build_userid {
 
     my $username = $self->username;
     my $password = $self->password;
-
-    # TODO should be "$userName/" . '\"'.$password . '\"' . "\@" . "$serviceid";
+    my $serviceid = $self->serviceid;
 
     # Note that password is quoted to prevent unexpected behaviour with special characters.
-    my $userid = "$username/" . '\"'.$password . '\"';
+    my $userid = "$username/" . '\"'.$password . '\"' . '@' . $serviceid;
 
     return $userid;
 }
@@ -155,12 +162,12 @@ sub run {
     $ENV{ORACLE_HOME} = $ORACLE_HOME;
     $ENV{ORACLE_SID} = $ORACLE_SID;
 
-    # TODO use a more modern approach like IPC:: something...
+    # TODO use a more modern approach like IPC::Run or something better.
 
     my $status = system($command);
 
     if (($status >>= 8) != 0) {
-        croak $?;
+        die $?;
     }
 }
 
@@ -194,6 +201,8 @@ Instance of L<Sweet::Oracle::Environment>.
 
 =head2 password
 
+=head2 serviceid
+
 =head1 METHODS
 
 =head2 run
@@ -219,6 +228,8 @@ Defaults to a plain L<Sweet::Oracle::Environment>.
 Defines default L<log_file> path as the same as L<data_file> but with C<.log> extension.
 
 =head2 _build_userid
+
+=head2 _build_serviceid
 
 =cut
 

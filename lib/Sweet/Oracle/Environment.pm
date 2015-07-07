@@ -8,6 +8,7 @@ use MooseX::Types::Path::Class;
 use namespace::autoclean;
 
 has ORACLE_HOME => (
+    coerce => 1,
     is  => 'lazy',
     isa => 'Path::Class::Dir',
 );
@@ -16,7 +17,7 @@ sub _build_ORACLE_HOME { $ENV{ORACLE_HOME} }
 
 has ORACLE_SID => (
     is  => 'lazy',
-    isa => 'Path::Class::Dir',
+    isa => 'Str',
 );
 
 sub _build_ORACLE_SID { $ENV{ORACLE_SID} }
